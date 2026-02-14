@@ -1,0 +1,816 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ✅ SEO под Яндекс -->
+  <title>Minedrop — динамичный слот с каскадами, бонусами и выигрышем до ×5000 в стиле Minecraft</title>
+  <meta name="description" content="Minedrop — онлайн-слот с каскадными выигрышами, бонусными раундами и множителями до ×5000. Играйте в браузере без установки с компьютера или смартфона.">
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+  <meta http-equiv="Content-Language" content="ru">
+  <meta name="language" content="ru">
+  <meta name="geo.region" content="RU">
+
+  <!-- canonical без домена (нормально для лендинга) -->
+  <link rel="canonical" href="index.htm">
+
+  <!-- Иконки -->
+  <link rel="icon" type="image/png" href="images/icon.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="images/icon.png" sizes="16x16">
+  <link rel="apple-touch-icon" href="images/icon.png">
+
+  <!-- UI -->
+  <meta name="theme-color" content="#0b0f12">
+
+  <style>
+    @font-face {
+      font-family: 'Minecraft';
+      src: url('fonts/minecraft-ten-font-cyrillic.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Benzin';
+      src: url('fonts/BenzinBold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html, body{ height:100%; }
+    img{ max-width:100%; height:auto; display:block; }
+    a{ color:inherit; text-decoration:none; }
+    ul{ padding-left: 1.2rem; }
+
+    :root{
+      --bg: #0b0f12;
+      --ink: #ffffff;
+      --muted: rgba(255,255,255,0.78);
+      --card: rgba(18, 21, 25, 0.58);
+      --card2: rgba(89, 83, 78, 0.82);
+
+      --accent2: #4CAF50;
+      --tg: #229ED9;
+
+      --radius: 16px;
+
+      --s-1: 8px;
+      --s-2: 12px;
+      --s-3: 16px;
+      --s-4: 24px;
+      --s-5: 32px;
+      --s-6: 44px;
+      --s-7: 64px;
+
+      --text-max: 760px;
+      --content-max: 1100px;
+      --lh: 1.65;
+
+      /* важно: это высота “запаса” под фикс-шапку */
+      --nav-offset: 92px;
+
+      --faq-bg: rgba(0,0,0,0.34);
+      --faq-border: rgba(255,255,255,0.18);
+    }
+
+    body{
+      background: var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: var(--lh);
+      overflow-x:hidden;
+    }
+
+    /* Чистый фон */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.68), rgba(0,0,0,0.82)),
+        url('images/fonnh.png') center/cover no-repeat;
+      filter: blur(5px);
+      transform: scale(1.05);
+      z-index:-2;
+    }
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 70% 8%, rgba(82,165,53,0.16), transparent 55%),
+        radial-gradient(700px 420px at 15% 20%, rgba(255,255,85,0.08), transparent 60%);
+      z-index:-1;
+    }
+
+    .wrap{
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: calc(var(--nav-offset) + var(--s-4)) var(--s-3) var(--s-7);
+    }
+
+    .text{
+      max-width: var(--text-max);
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* Якоря не прячем под шапку */
+    section { scroll-margin-top: calc(var(--nav-offset) + 16px); }
+
+    .mc{ font-family:'Minecraft', sans-serif; text-transform:uppercase; letter-spacing:0.5px; }
+
+    h1,h2,h3{ line-height: 1.15; }
+    h1{
+      font-size: clamp(30px, 4.2vw, 46px);
+      margin: var(--s-3) 0 var(--s-2);
+      font-family: 'Minecraft', sans-serif;
+      letter-spacing: 0.6px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.9);
+    }
+    h2{
+      font-size: clamp(22px, 3vw, 30px);
+      margin: var(--s-6) 0 var(--s-3);
+      font-family: 'Minecraft', sans-serif;
+      letter-spacing: 0.4px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.9);
+    }
+    h3{
+      font-size: 18px;
+      margin: var(--s-3) 0 var(--s-2);
+      font-family: 'Benzin', system-ui, sans-serif;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    p{ margin: var(--s-2) 0; color: rgba(255,255,255,0.92); }
+    .lead{ font-size: 18px; color: rgba(255,255,255,0.92); }
+
+    .card{
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius);
+      padding: var(--s-4);
+      box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+    }
+    .card.alt{ background: var(--card2); border-color: rgba(255,255,255,0.08); }
+
+    /* ======= NAV ======= */
+    .nav{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      padding: 12px 14px;
+    }
+    .nav-inner{
+      max-width: var(--content-max);
+      margin: 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: var(--s-2);
+
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      background: rgba(0,0,0,0.30);
+      backdrop-filter: blur(12px);
+      padding: 10px 12px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+
+      /* ✅ фикс: разрешаем перенос строк в шапке, чтобы ничего не налезало */
+      flex-wrap: wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 180px;
+    }
+    .brand img{
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      flex-shrink: 0;
+    }
+    .brand-text{
+      display:flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      padding-top: 1px;
+    }
+    .brand .name{
+      font-family:'Minecraft', sans-serif;
+      letter-spacing: 0.6px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.9);
+      font-size: 14px;
+      text-transform: uppercase;
+      line-height: 1.12;
+    }
+    .brand .sub{
+      font-size: 11px;
+      color: rgba(255,255,255,0.72);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1.22;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      flex: 1;
+    }
+    .nav-links a{
+      font-family: 'Minecraft', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      color: rgba(255,255,255,0.86);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+    }
+    .nav-links a:hover{ background: rgba(255,255,255,0.10); }
+
+    .nav-cta{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 260px;
+      justify-content: flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px;
+      transition: transform .08s ease, filter .15s ease, background .15s ease;
+      cursor:pointer;
+      white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+    }
+    .btn span{
+      font-family:'Minecraft', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+      font-size: 14px;
+    }
+    .btn.play{ background: linear-gradient(180deg, rgba(76,175,80,0.95), rgba(45,123,36,0.95)); }
+    .btn.tg{ background: linear-gradient(180deg, rgba(34,158,217,0.95), rgba(26,121,169,0.95)); }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+    .btn:active{ transform: translateY(1px); }
+
+    /* ======= HERO ======= */
+    header{
+      text-align:center;
+      margin-bottom: var(--s-5);
+    }
+    .logo{
+      width: min(720px, 94%);
+      margin: 0 auto var(--s-2);
+      filter: drop-shadow(10px 10px 0 rgba(0,0,0,0.7));
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap: nowrap;
+      justify-content:center;
+      gap: 10px;
+      margin: var(--s-3) 0 var(--s-2);
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 999px;
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(10px);
+      font-family:'Minecraft', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+      min-width: 0;
+    }
+
+    .actions{
+      display:flex;
+      justify-content:center;
+      gap: var(--s-2);
+      flex-wrap: wrap;
+      margin-top: var(--s-3);
+    }
+    .actions .btn{
+      min-width: 240px;
+      padding: 14px 18px;
+      border-radius: 16px;
+    }
+
+    /* ======= VIDEO ======= */
+    .video{
+      margin-top: var(--s-4);
+      display:grid;
+      place-items:center;
+      width: 100%;
+    }
+
+    .video-decor{
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+
+      /* ✅ фикс: добавляем вертикальный “воздух”,
+         чтобы кирки точно помещались и не “уезжали” */
+      padding: 14px 0;
+    }
+    .pickaxes-bg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 520px;
+      max-width: 120%;
+      z-index: 1;
+      opacity: 0.95;
+      filter: drop-shadow(6px 10px 0 rgba(0,0,0,0.55));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .phone{
+      width: min(360px, 85vw);
+      aspect-ratio: 9/16;
+      border-radius: 18px;
+      overflow:hidden;
+      background:#000;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.14);
+      position: relative;
+      z-index: 2;
+
+      /* ✅ фикс: центрируем железобетонно */
+      margin: 0 auto;
+    }
+    .phone video{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .video-note{
+      margin-top: var(--s-2);
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+
+    /* ======= FEATURES ======= */
+    .features-box{
+      margin-top: var(--s-3);
+      padding: var(--s-3);
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.20);
+    }
+
+    /* ======= FAQ плитками ======= */
+    .faq{
+      margin-top: var(--s-3);
+      display:grid;
+      gap: 12px;
+    }
+
+    details.faq-item{
+      border: 1px solid var(--faq-border);
+      border-radius: 16px;
+      background: var(--faq-bg);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.28);
+      overflow:hidden;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    details.faq-item:hover{
+      transform: translateY(-1px);
+      background: rgba(0,0,0,0.40);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    summary.faq-q{
+      cursor:pointer;
+      list-style:none;
+      padding: 16px 16px;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    summary.faq-q::-webkit-details-marker{ display:none; }
+
+    .q{
+      font-family:'Benzin', system-ui, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.95);
+    }
+
+    .chev{
+      width: 12px;
+      height: 12px;
+      border-right: 3px solid #fff;
+      border-bottom: 3px solid #fff;
+      transform: rotate(45deg);
+      transition: transform .15s ease;
+      flex-shrink:0;
+      opacity: 0.95;
+    }
+    details[open] .chev{ transform: rotate(225deg); }
+
+    .a{
+      padding: 0 16px 16px 16px;
+      color: rgba(255,255,255,0.92);
+      font-size: 15px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+
+    /* ======= FOOTER (как был: в карточке) ======= */
+    footer{
+      margin-top: var(--s-6);
+      text-align:center;
+    }
+    .footer-warning{
+      font-family:'Minecraft', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.92);
+      padding-bottom: var(--s-2);
+      border-bottom: 1px solid rgba(255,255,255,0.18);
+      margin-bottom: var(--s-2);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+    }
+    .footer-copy{
+      font-family:'Minecraft', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.72);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+    }
+
+    /* ======= POPUP ======= */
+    .popup{
+      position: fixed;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: var(--s-3);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+    .popup.show{ opacity:1; visibility:visible; }
+    .popup .backdrop{
+      position:absolute;
+      inset:0;
+      background: rgba(0,0,0,0.72);
+    }
+    .popup .box{
+      position: relative;
+      width: min(460px, 92vw);
+      background: rgba(89, 83, 78, 0.98);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+      padding: var(--s-4);
+      text-align:center;
+      z-index: 1;
+    }
+    .popup .close{
+      position:absolute;
+      top: 10px;
+      right: 12px;
+      font-family:'Minecraft', sans-serif;
+      font-size: 22px;
+      cursor:pointer;
+      color: rgba(255,255,255,0.75);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+      user-select:none;
+    }
+    .popup .close:hover{ color:#fff; }
+    .popup .icon{
+      width: 64px;
+      margin: 0 auto var(--s-2);
+      filter: drop-shadow(4px 4px 0 rgba(0,0,0,0.6));
+    }
+    .popup .text{
+      font-family:'Minecraft', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #ffff55;
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
+      font-size: 20px;
+      margin-bottom: var(--s-2);
+    }
+    .popup .mini{
+      color: rgba(255,255,255,0.9);
+      margin-bottom: var(--s-3);
+      font-size: 14px;
+    }
+
+    @media (max-width: 860px){
+      .nav-links{ display:none; }
+      .brand{ min-width: 0; }
+      .nav-cta{ min-width: 0; }
+    }
+
+    @media (max-width: 720px){
+      .chips{ flex-wrap: wrap; gap: 8px; }
+      .pickaxes-bg{ width: 360px; }
+    }
+
+    /* ✅ Главный фикс под мобилы: шапка становится в 2 строки, кнопки не лезут на лого,
+       и увеличиваем --nav-offset, чтобы контент НЕ залезал под фикс-шапку */
+    @media (max-width: 520px){
+      :root{ --nav-offset: 140px; }
+
+      .nav{ padding: 10px 10px; }
+      .nav-inner{
+        gap: 10px;
+        padding: 10px 10px;
+        justify-content: center;
+      }
+
+      .brand{
+        flex: 1 1 100%;
+        min-width: 0;
+        justify-content: center;
+      }
+      .brand-text{
+        align-items: center;
+        text-align: center;
+      }
+
+      .nav-cta{
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        justify-content: center;
+      }
+
+      /* ✅ кнопки меньше и в одну строку (2 штуки рядом), без налезаний */
+      .nav-cta .btn{
+        width: calc(50% - 6px);
+        padding: 10px 10px;
+        border-radius: 12px;
+      }
+      .btn span{ font-size: 13px; }
+
+      /* ✅ видео меньше + строго по центру, чтобы кирки влезали по бокам */
+      .phone{ width: min(300px, 78vw); }
+      .pickaxes-bg{ width: 340px; max-width: 140%; }
+
+      /* кнопки в секциях пусть будут 100% — это ок */
+      .actions .btn{ width: 100%; min-width: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="nav" aria-label="Навигация">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="На верх страницы">
+        <img src="images/icon.png" alt="">
+        <div class="brand-text">
+          <div class="name">Minedrop</div>
+          <div class="sub">слот • minecraft</div>
+        </div>
+      </a>
+
+      <div class="nav-links" aria-label="Разделы">
+        <a href="#try">Попробуй</a>
+        <a href="#features">Особенности</a>
+        <a href="#faq">FAQ</a>
+        <a href="#seo">Обзор</a>
+      </div>
+
+      <div class="nav-cta">
+        <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Играть</span></a>
+        <a class="btn tg" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Telegram</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top" class="wrap">
+    <header class="text">
+      <img class="logo" src="images/minedrop.png" alt="Minedrop">
+      <h1>Minedrop — игровой слот в духе Minecraft</h1>
+
+      <div class="chips" aria-label="Ключевые особенности">
+        <div class="chip">🎁 фриспины</div>
+        <div class="chip">💎 бонусы до ×5000</div>
+        <div class="chip">📱 подходит для телефона</div>
+      </div>
+
+      <p class="lead">
+        MMinedrop — игровой слот в стилистике Minecraft с множителями и бонусными этапами. Заходи и протестируй механику — разобраться можно буквально за минуту.
+      </p>
+
+      <div class="actions">
+        <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored" style="padding: 16px 20px;"><span>Играть сейчас</span></a>
+        <a class="btn tg" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored" style="padding: 16px 20px;"><span>Играть в Telegram</span></a>
+      </div>
+    </header>
+
+    <section id="try" class="text">
+      <h2>Просто попробуй</h2>
+      <div class="card">
+        <div class="video">
+          <div class="video-decor">
+            <img src="images/Group%2094.png" class="pickaxes-bg" alt="">
+            <div class="phone">
+              <video autoplay="" muted="" loop="" playsinline="">
+                <source src="video.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+              </video>
+            </div>
+          </div>
+
+          <div class="video-note">короткое демо, чтобы понять игру</div>
+        </div>
+
+        <div class="actions" style="margin-top: var(--s-4);">
+          <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Играть</span></a>
+          <a class="btn tg" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Telegram</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="text">
+      <h2>Характеристики слота Minedrop</h2>
+      <div class="card alt">
+        <p>
+        Minedrop — свежий слот на платформе Fugu, оформленный в духе Minecraft. Игроков ждут каскадные символы, множители, зрелищные бонусные раунды и возможность увеличить ставку вплоть до ×5000.
+        </p>
+
+        <div class="features-box">
+          <ul>
+            <li>🎮 Полная стилизация под Minecraft</li>
+            <li>💣 Каскадные комбинации и эффектные взрывы блоков</li>
+            <li>🔥 Бонусный режим с растущими множителями</li>
+            <li>💎 Потенциальный выигрыш до ×5000 ставки</li>
+            <li>📱 Плавная работа и удобство на мобильных устройствах</li>
+          </ul>
+        </div>
+
+        <div class="actions" style="margin-top: var(--s-4);">
+          <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Играть</span></a>
+          <a class="btn tg" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Telegram</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="text" id="seo">
+      <h2>Подробный обзор</h2>
+      <div class="card alt">
+        <p>
+         Minedrop— игровой слот в духе Minecraft, объединяющий понятные правила и быстрый, динамичный процесс. В основе лежит каскадная механика: выигрышные символы исчезают после подсчёта, а их место занимают новые. Благодаря этому за одно вращение можно выстраивать цепочки побед и получать несколько выигрышей подряд.
+        </p>
+
+        <p>
+         Во время игры запускаются множители, бонусные этапы и особые символы, за счёт которых максимальная выплата в Minedrop способна достигать ×5000 от размера ставки. Слот подойдёт и новичкам, и более опытным игрокам: механика остаётся простой и понятной, но при этом даёт высокий потенциал выигрыша и ощущение динамики в каждом спине.
+        </p>
+
+        <p>
+        Играть в слот Minedrop можно полностью онлайн — он одинаково удобно запускается и на компьютере, и на смартфоне. Игра изначально разработана с учётом мобильных экранов, поэтому интерфейс корректно масштабируется, элементы управления остаются читаемыми, а анимации работают плавно даже на слабых устройствах. Слот стабильно функционирует на Android и iOS, не требует установки программ или регистрации в приложениях и открывается напрямую в браузере за несколько секунд.
+        </p>
+
+        <p>
+        Благодаря узнаваемой визуальной подаче, бонусным раундам и фриспинам игровой автомат Minedrop быстро привлёк внимание игроков и стал активно обсуждаться в сообществе. Если нужен слот в стилистике Minecraft с бонусами и потенциалом крупных выигрышей, Minedrop выглядит удачным и понятным выбором.
+        </p>
+      </div>
+    </section>
+
+    <section id="faq" class="text">
+      <h2>FAQ - Частые вопросы</h2>
+
+      <div class="faq">
+        <details class="faq-item">
+          <summary class="faq-q"><div class="q">Что представляет собой Minedrop?</div><div class="chev"></div></summary>
+          <div class="a">Minedrop — это современный цифровой игровой автомат, созданный в визуальной стилистике популярной песочницы. Проект отличается доступной механикой и захватывающим игровым ритмом, объединяя прозрачные условия игры, прогрессивную систему падающих выигрышей и разнообразные вспомогательные опции, которые привлекают игроков с разным уровнем опыта.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q"><div class="q">Как функционирует система падающих символов?</div><div class="chev"></div></summary>
+          <div class="a">Когда на игровом поле образуется выигрышная последовательность, задействованные элементы исчезают. Пустые клетки мгновенно заполняются вновь поступившими символами, которые падают сверху. Данная механика создает цепную реакцию, позволяющую генерировать множественные призовые комбинации в течение одного спина и формировать длинные последовательности успешных ходов.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q"><div class="q">Какие награды и привилегии доступны игрокам?</div><div class="chev"></div></summary>
+          <div class="a">Игровой автомат оснащен системой коэффициентов увеличения выплат, уникальными иконками с особыми свойствами и специализированными игровыми раундами, включая циклы бесплатных кручений. Эти компоненты существенно повышают вероятность получения значительной суммы и обогащают впечатление от игрового процесса разнообразием возможностей.</div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-q"><div class="q">Какова предельная сумма потенциального выигрыша?</div><div class="chev"></div></summary>
+          <div class="a">При благоприятном стечении обстоятельств, когда активируются все доступные множители и бонусные механизмы одновременно, размер выигрыша может составить ×5000 от первоначальной ставки игрока.</div>
+        </details>
+      </div>
+
+        <details class="faq-item">
+          <summary class="faq-q"><div class="q">Возможна ли игра через мобильные гаджеты?</div><div class="chev"></div></summary>
+          <div class="a">Безусловно. Приложение полностью оптимизировано для портативных платформ и корректно функционирует как на устройствах с операционной системой Android, так и на яблочных девайсах с iOS. Игра не требует предварительной загрузки и инсталляции — она запускается непосредственно через веб-браузер независимо от того, используете ли вы компактный смартфон или стационарный персональный компьютер.</div>
+        </details>
+      </div>
+
+      <div class="card" style="margin-top: var(--s-4);">
+        <h3 style="margin-top:0;">Начни играть прямо сейчас!</h3>
+        <p>Открой слот и попробуй механику в деле. Интерфейс интуитивный, поэтому разобраться можно буквально за минуту.</p>
+        <div class="actions">
+          <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Перейти к игре</span></a>
+          <a class="btn tg" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Telegram</span></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="text">
+      <div class="card">
+        <div class="footer-warning">ИГРАЙТЕ ОТВЕТСТВЕННО. ТОЛЬКО ДЛИ ЛИЦ СТАРШЕ 18 ЛЕТ.</div>
+        <div class="footer-copy">© 2026 MINEROP, ВСЕ ПРАВА ЗАЩИЩЕНЫ.</div>
+      </div>
+    </footer>
+  </main>
+
+  <div id="spinsPopup" class="popup" aria-hidden="true">
+    <div class="backdrop" data-close="1"></div>
+    <div class="box" role="dialog" aria-modal="true" aria-label="Фриспины">
+      <div class="close" id="popupCloseBtn" aria-label="Закрыть">x</div>
+      <img src="images/pi.png" alt="Кирка" class="icon">
+      <div class="text">Доступно 50 фриспинов</div>
+      <div class="mini">Забери предложение и переходи в игру.</div>
+      <div class="actions" style="margin-top:0;">
+        <a class="btn play" href="https://fugu-way-one.com/cefe00eac" target="_blank" rel="noopener nofollow sppnsored"><span>Забрать</span></a>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Что представляет собой Minedrop?","acceptedAnswer":{"@type":"Answer","text":"Minedrop — это современный цифровой игровой автомат, созданный в визуальной стилистике популярной песочницы. Проект отличается доступной механикой и захватывающим игровым ритмом, объединяя прозрачные условия игры, прогрессивную систему падающих выигрышей и разнообразные вспомогательные опции, которые привлекают игроков с разным уровнем опыта."}},
+      {"@type":"Question","name":"Как функционирует система падающих символов?","acceptedAnswer":{"@type":"Answer","text":"Когда на игровом поле образуется выигрышная последовательность, задействованные элементы исчезают. Пустые клетки мгновенно заполняются вновь поступившими символами, которые падают сверху. Данная механика создает цепную реакцию, позволяющую генерировать множественные призовые комбинации в течение одного спина и формировать длинные последовательности успешных ходов."}},
+      {"@type":"Question","name":"Какие награды и привилегии доступны игрокам?","acceptedAnswer":{"@type":"Answer","text":"Игровой автомат оснащен системой коэффициентов увеличения выплат, уникальными иконками с особыми свойствами и специализированными игровыми раундами, включая циклы бесплатных кручений. Эти компоненты существенно повышают вероятность получения значительной суммы и обогащают впечатление от игрового процесса разнообразием возможностей."}},
+      {"@type":"Question","name":"Какова предельная сумма потенциального выигрыша?","acceptedAnswer":{"@type":"Answer","text":"При благоприятном стечении обстоятельств, когда активируются все доступные множители и бонусные механизмы одновременно, размер выигрыша может составить ×5000 от первоначальной ставки игрока."}},
+      {"@type":"Question","name":"Возможна ли игра через мобильные гаджеты?","acceptedAnswer":{"@type":"Answer","text":"Безусловно. Приложение полностью оптимизировано для портативных платформ и корректно функционирует как на устройствах с операционной системой Android, так и на яблочных девайсах с iOS. Игра не требует предварительной загрузки и инсталляции — она запускается непосредственно через веб-браузер независимо от того, используете ли вы компактный смартфон или стационарный персональный компьютер."}}
+    ]
+  }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const popup = document.getElementById('spinsPopup');
+      const closeBtn = document.getElementById('popupCloseBtn');
+
+      const openPopup = () => { popup.classList.add('show'); popup.setAttribute('aria-hidden','false'); };
+      const closePopup = () => { popup.classList.remove('show'); popup.setAttribute('aria-hidden','true'); };
+
+      setTimeout(openPopup, 5000);
+
+      closeBtn?.addEventListener('click', closePopup);
+      popup?.addEventListener('click', (e) => {
+        if (e.target?.dataset?.close === '1') closePopup();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closePopup();
+      });
+    });
+  </script>
+</body>
+</html>
