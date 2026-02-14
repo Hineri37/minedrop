@@ -1,26 +1,23 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✅ SEO под Яндекс -->
   <title>Minedrop — динамичный слот с каскадами, бонусами и выигрышем до ×5000 в стиле Minecraft</title>
   <meta name="description" content="Minedrop — онлайн-слот с каскадными выигрышами, бонусными раундами и множителями до ×5000. Играйте в браузере без установки с компьютера или смартфона.">
   <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
   <meta http-equiv="Content-Language" content="ru">
   <meta name="language" content="ru">
   <meta name="geo.region" content="RU">
-
-  <!-- canonical без домена (нормально для лендинга) -->
-  <link rel="canonical" href="index.htm">
-
-  <!-- Иконки -->
+  <meta property="og:title" content="Minedrop — динамичный слот с каскадами, бонусами и выигрышем до ×5000 в стиле Minecraft">
+  <meta property="og:site_name" content="Minedrop slot">
+  <meta property="og:url" content="https://minedrop-slot.vercel.app/">
+  <meta property="og:description" content="Minedrop — онлайн-слот с каскадными выигрышами, бонусными раундами и множителями до ×5000. Играйте в браузере без установки с компьютера или смартфона.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://i.ibb.co/JFCCRFC8/minedrop-main.png">
   <link rel="icon" type="image/png" href="images/icon.png" sizes="32x32">
   <link rel="icon" type="image/png" href="images/icon.png" sizes="16x16">
   <link rel="apple-touch-icon" href="images/icon.png">
-
-  <!-- UI -->
   <meta name="theme-color" content="#0b0f12">
 
   <style>
@@ -68,8 +65,6 @@
       --text-max: 760px;
       --content-max: 1100px;
       --lh: 1.65;
-
-      /* важно: это высота “запаса” под фикс-шапку */
       --nav-offset: 92px;
 
       --faq-bg: rgba(0,0,0,0.34);
@@ -83,8 +78,7 @@
       line-height: var(--lh);
       overflow-x:hidden;
     }
-
-    /* Чистый фон */
+    
     body::before{
       content:"";
       position:fixed;
@@ -118,7 +112,6 @@
       margin-right:auto;
     }
 
-    /* Якоря не прячем под шапку */
     section { scroll-margin-top: calc(var(--nav-offset) + 16px); }
 
     .mc{ font-family:'Minecraft', sans-serif; text-transform:uppercase; letter-spacing:0.5px; }
@@ -159,7 +152,6 @@
     }
     .card.alt{ background: var(--card2); border-color: rgba(255,255,255,0.08); }
 
-    /* ======= NAV ======= */
     .nav{
       position: fixed;
       top: 0;
@@ -182,8 +174,6 @@
       backdrop-filter: blur(12px);
       padding: 10px 12px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-
-      /* ✅ фикс: разрешаем перенос строк в шапке, чтобы ничего не налезало */
       flex-wrap: wrap;
     }
 
@@ -277,7 +267,6 @@
     .btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
     .btn:active{ transform: translateY(1px); }
 
-    /* ======= HERO ======= */
     header{
       text-align:center;
       margin-bottom: var(--s-5);
@@ -326,7 +315,6 @@
       border-radius: 16px;
     }
 
-    /* ======= VIDEO ======= */
     .video{
       margin-top: var(--s-4);
       display:grid;
@@ -339,9 +327,6 @@
       display: grid;
       place-items: center;
       width: 100%;
-
-      /* ✅ фикс: добавляем вертикальный “воздух”,
-         чтобы кирки точно помещались и не “уезжали” */
       padding: 14px 0;
     }
     .pickaxes-bg{
@@ -368,8 +353,6 @@
       border: 1px solid rgba(255,255,255,0.14);
       position: relative;
       z-index: 2;
-
-      /* ✅ фикс: центрируем железобетонно */
       margin: 0 auto;
     }
     .phone video{
@@ -387,7 +370,6 @@
       text-align: center;
     }
 
-    /* ======= FEATURES ======= */
     .features-box{
       margin-top: var(--s-3);
       padding: var(--s-3);
@@ -396,7 +378,6 @@
       background: rgba(0,0,0,0.20);
     }
 
-    /* ======= FAQ плитками ======= */
     .faq{
       margin-top: var(--s-3);
       display:grid;
@@ -456,7 +437,6 @@
       border-top: 1px solid rgba(255,255,255,0.10);
     }
 
-    /* ======= FOOTER (как был: в карточке) ======= */
     footer{
       margin-top: var(--s-6);
       text-align:center;
@@ -481,7 +461,6 @@
       text-shadow: 2px 2px 0 rgba(0,0,0,0.85);
     }
 
-    /* ======= POPUP ======= */
     .popup{
       position: fixed;
       inset: 0;
@@ -554,8 +533,6 @@
       .pickaxes-bg{ width: 360px; }
     }
 
-    /* ✅ Главный фикс под мобилы: шапка становится в 2 строки, кнопки не лезут на лого,
-       и увеличиваем --nav-offset, чтобы контент НЕ залезал под фикс-шапку */
     @media (max-width: 520px){
       :root{ --nav-offset: 140px; }
 
@@ -583,19 +560,14 @@
         justify-content: center;
       }
 
-      /* ✅ кнопки меньше и в одну строку (2 штуки рядом), без налезаний */
       .nav-cta .btn{
         width: calc(50% - 6px);
         padding: 10px 10px;
         border-radius: 12px;
       }
       .btn span{ font-size: 13px; }
-
-      /* ✅ видео меньше + строго по центру, чтобы кирки влезали по бокам */
       .phone{ width: min(300px, 78vw); }
       .pickaxes-bg{ width: 340px; max-width: 140%; }
-
-      /* кнопки в секциях пусть будут 100% — это ок */
       .actions .btn{ width: 100%; min-width: 0; }
     }
   </style>
